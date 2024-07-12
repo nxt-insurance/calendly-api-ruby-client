@@ -1392,7 +1392,7 @@ module AssertHelper
     e = assert_raises Calendly::ApiError do
       proc.call
     end
-    assert_equal ex_body, e.response.body
+    assert_equal ex_body, e.response.body if ex_body
     assert_equal ex_status, e.status
     assert_equal ex_title, e.title if ex_title
     assert_equal ex_message, e.message if ex_message

@@ -1510,7 +1510,7 @@ module Calendly
       proc_error = proc do
         @client.user user_id
       end
-      assert_api_error proc_error, 400, res_body
+      assert_api_error proc_error, 400, nil, nil, "Invalid response received: unexpected token at '#{res_body}'"
     end
 
     #

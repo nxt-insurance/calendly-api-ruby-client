@@ -845,6 +845,8 @@ module Calendly
       res = access_token.request method, path, params: params, body: body
       debug_log "Response status:#{res.status}, body:#{res.body.dup&.force_encoding(Encoding::UTF_8)}"
       parse_as_json res
+    rescue JSON::ParserError => e
+      raise ApiError.new nil, e, message: "Invalid response received: #{e.message}", status: 400
     rescue OAuth2::Error => e
       res = e.response.response
       raise ApiError.new res, e
@@ -878,7 +880,8 @@ module Calendly
       {
         site: API_HOST,
         authorize_url: "#{AUTH_API_HOST}/oauth/authorize",
-        token_url: "#{AUTH_API_HOST}/oauth/token"
+        token_url: "#{AUTH_API_HOST}/oauth/token",
+        auth_scheme: :request_body
       }
     end
 

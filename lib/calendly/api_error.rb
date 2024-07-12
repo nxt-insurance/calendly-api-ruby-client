@@ -17,11 +17,12 @@ module Calendly
     # @return [OAuth2::Error, JSON::ParserError]
     attr_reader :cause_exception
 
-    def initialize(response, cause_exception, message: nil)
+    def initialize(response, cause_exception, message: nil, status: nil)
       @response = response
       @cause_exception = cause_exception
       @message = message
       set_attributes_from_response
+      @status ||= status
       @message ||= cause_exception.message if cause_exception
       super @message
     end
